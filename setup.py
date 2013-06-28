@@ -14,6 +14,7 @@ tests_require = [
     'factory_boy',
     'webtest',
     'django-webtest',
+    'south',
 ]
 
 setup(
@@ -41,5 +42,6 @@ setup(
     ],
     install_requires=[
         'Django>=1.3',
+        'south',
     ],
 )
