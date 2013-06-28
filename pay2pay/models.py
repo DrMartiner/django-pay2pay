@@ -31,6 +31,7 @@ class Order(models.Model):
     error_msg = models.CharField('Описание ошибки', max_length=256, blank=True, null=True)
     test_mode = models.BooleanField('Тестовый режим', default=conf.PAY2PAY_TEST_MODE)
 
+    updated = models.DateTimeField('Обновлен', auto_now=True)
     created = models.DateTimeField('Создан', auto_now_add=True)
 
     @property
