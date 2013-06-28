@@ -50,6 +50,10 @@ class PayForm(forms.ModelForm):
         self.fields['xml'].initial = base64.b64encode(xml)
         self.fields['sign'].initial = get_signature(xml, conf.PAY2PAY_SEKRET_KEY)
 
+        if conf.PAY2PAY_HIDE_FORM_FIELD:
+            for name in self.fields:
+                self.fields[name].widget = forms.HiddenInput()
+
     class Meta:
         exclude = ('created',)
         model = Order
