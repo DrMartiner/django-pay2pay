@@ -1,5 +1,12 @@
+# -*- coding: utf-8 -*-
+
 import sys
 import os.path
+
+try:
+    from settings_local import *
+except ImportError:
+    print "Don't forget create settings_local.py"
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ''))
 sys.path.insert(0, ROOT)
@@ -10,15 +17,15 @@ TEMPLATE_DEBUG = DEBUG
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'db.sqlite3',
+        'NAME': ':memory:',
     }
 }
 
-PAY2PAY_MERCHANT_ID = 2669
-PAY2PAY_SEKRET_KEY = 'qCmm7SNTSdasfsqCmm7SNTSd'
-PAY2PAY_FAIL_URL = 'http://127.0.0.1:8000/fail/'
-PAY2PAY_SUCCESS_URL = 'http://127.0.0.1:8000/success/'
-PAY2PAY_RESULT_URL = 'http://127.0.0.1:8000/success/'
+PAY2PAY_MERCHANT_ID = 1111
+PAY2PAY_SEKRET_KEY = 'qCmm7dsaSdasfsqCmgdjfgkdfghdfsad'
+PAY2PAY_FAIL_URL = 'http://localhost:8000/fail/'
+PAY2PAY_SUCCESS_URL = 'http://localhost:8000/success/'
+PAY2PAY_RESULT_URL = 'http://localhost:8000/success/'
 PAY2PAY_TEST_MODE = True
 
 SECRET_KEY = '!!!very_secret!!!'
@@ -33,6 +40,14 @@ INSTALLED_APPS = (
     'factory',
     'pay2pay',
 )
+
+SOUTH_TESTS_MIGRATE = False
+SKIP_SOUTH_TESTS = True
+
+INTERNAL_IPS = [
+    'localhost',
+    '127.0.0.1',
+]
 
 TEMPLATE_DIRS = (
     os.path.join(ROOT, 'templates'),
@@ -63,12 +78,7 @@ LOGGING = {
     }
 }
 
-
-
-
-
-
-
-
-
-
+try:
+    from settings_local import *
+except ImportError:
+    pass

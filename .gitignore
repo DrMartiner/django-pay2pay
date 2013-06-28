@@ -2,6 +2,7 @@
 
 activate
 .virtualenv/*
+settings_local.py
 
 .DS_Store
 ._*
