@@ -29,6 +29,7 @@ class Order(models.Model):
     trans_id = models.CharField('Номер транзакции', max_length=32, blank=True, null=True)
     status = models.CharField('Статус', max_length=16, choices=STATUS_CHOICES, blank=True, null=True)
     error_msg = models.CharField('Описание ошибки', max_length=256, blank=True, null=True)
+    test_mode = models.BooleanField('Тестовый режим', default=conf.PAY2PAY_TEST_MODE)
 
     created = models.DateTimeField('Создан', auto_now_add=True)
 
