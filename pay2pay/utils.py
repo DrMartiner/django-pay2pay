@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
 import base64
+import hashlib
 import lxml.etree
 import lxml.builder
-import hashlib
 
 
 def build_xml_string(data):
@@ -38,8 +38,8 @@ def build_xml_string(data):
     return lxml.etree.tostring(request, encoding='utf-8').replace('\n', '')
 
 
-def get_signature(xml, secret_key):
-    sign_str = '{0}{1}{0}'.format(secret_key, xml)
+def get_signature(xml, key):
+    sign_str = '{0}{1}{0}'.format(key, xml)
     hsh = hashlib.md5()
     hsh.update(sign_str)
     sign_md5 = hsh.hexdigest()
