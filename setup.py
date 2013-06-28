@@ -12,6 +12,8 @@ tests_require = [
     'mock==1.0.1',
     'coveralls',
     'factory_boy',
+    'webtest',
+    'django-webtest',
 ]
 
 setup(
