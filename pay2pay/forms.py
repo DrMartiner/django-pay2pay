@@ -48,7 +48,7 @@ class PayForm(forms.ModelForm):
 
         xml = build_xml_string(data)
         self.fields['xml'].initial = base64.b64encode(xml)
-        self.fields['sign'].initial = get_signature(xml, conf.PAY2PAY_SEKRET_KEY)
+        self.fields['sign'].initial = get_signature(xml, conf.PAY2PAY_SECRET_KEY)
 
         if conf.PAY2PAY_HIDE_FORM_FIELD:
             for name in self.fields:

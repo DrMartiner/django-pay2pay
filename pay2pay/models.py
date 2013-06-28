@@ -36,7 +36,7 @@ class Order(models.Model):
 
     @property
     def signature(self):
-        return get_signature(self.xml, conf.PAY2PAY_SEKRET_KEY)
+        return get_signature(self.xml, conf.PAY2PAY_SECRET_KEY)
 
     @property
     def xml(self):
