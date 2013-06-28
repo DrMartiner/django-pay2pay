@@ -10,7 +10,7 @@ from .utils import get_signature
 class Order(models.Model):
     version = models.CharField('Версия интерфейса', max_length=8, default='1.3')
     merchant_id = models.PositiveIntegerField('ID магазина', default=conf.PAY2PAY_MERCHANT_ID)
-    order_id = models.CharField('Номер заказа', max_length=32, default=lambda: str(uuid.uuid4()))
+    order_id = models.CharField('Номер заказа', max_length=32, default=lambda: str(uuid.uuid4())[:8])
     amount = models.FloatField('Сумма', default=.0)
     currency = models.CharField('Валюта', max_length=8, default=conf.PAY2PAY_CURRENCY)
     description = models.CharField('Описание', max_length=512, default='')
