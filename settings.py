@@ -28,7 +28,7 @@ PAY2PAY_HIDE_KEY = 'qCmm7SNTSdasfsqCmm7SNTSd'
 PAY2PAY_SEKRET_KEY = 'qCmm7dsaSdasfsqCmgdjfgkdfghdfsad'
 PAY2PAY_FAIL_URL = 'http://localhost:8000/fail/'
 PAY2PAY_SUCCESS_URL = 'http://localhost:8000/success/'
-PAY2PAY_RESULT_URL = 'http://localhost:8000/success/'
+PAY2PAY_RESULT_URL = 'http://localhost:8000/pay2pay/confirm/'
 PAY2PAY_TEST_MODE = True
 
 SECRET_KEY = '!!!very_secret!!!'
