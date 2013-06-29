@@ -1,0 +1,13 @@
+<style>
+    input {
+        min-width: 250px;
+    }
+</style>
+<form action="https://merchant.pay2pay.com/?page=init" method="post">
+    <ul style="list-style: none">
+        {{ form.as_ul|safe }}
+        <li>
+            <input type="submit" />
+        </li>
+    </ul>
+</form>
