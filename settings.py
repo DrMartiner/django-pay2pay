@@ -21,7 +21,10 @@ DATABASES = {
     }
 }
 
+STATIC_URL = '/static/'
+
 PAY2PAY_MERCHANT_ID = 1111
+PAY2PAY_HIDE_KEY = 'qCmm7SNTSdasfsqCmm7SNTSd'
 PAY2PAY_SEKRET_KEY = 'qCmm7dsaSdasfsqCmgdjfgkdfghdfsad'
 PAY2PAY_FAIL_URL = 'http://localhost:8000/fail/'
 PAY2PAY_SUCCESS_URL = 'http://localhost:8000/success/'

@@ -15,6 +15,8 @@ tests_require = [
     'webtest',
     'django-webtest',
     'south',
+    'xmltodict',
+    'django-annoying',
 ]
 
 setup(
@@ -43,5 +45,7 @@ setup(
     install_requires=[
         'Django>=1.3',
         'south',
+        'xmltodict',
+        'django-annoying',
     ],
 )
