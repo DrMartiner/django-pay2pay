@@ -19,9 +19,38 @@ Quick start
 
 3. Обязательные параметры settings.py::
 
+      PAY2PAY_MERCHANT_ID = 1111
+      PAY2PAY_HIDE_KEY = 'qCmm7SNTSdasfsqCmm7SNTSd'
+      PAY2PAY_SEKRET_KEY = 'qCmm7dsaSdasfsqCmgdjfgkdfghdfsad'
+      PAY2PAY_FAIL_URL = 'http://example.com/fail/'
+      PAY2PAY_SUCCESS_URL = 'http://example.com/success/'
+      PAY2PAY_RESULT_URL = 'http://example.com/pay2pay/confirm/'
+
+4. Добавить логер с именем ``pay2pay``::
+
+      LOGGING = {
+          'version': 1,
+          'disable_existing_loggers': False,
+          'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(funcName)s %(message)s'
+        }
+          },
+          'handlers': {
+              'pay2pay': {
+                  'level': 'DEBUG',
+                  'class': 'logging.handlers.WatchedFileHandler',
+                  'filename': os.path.join(ROOT, 'pay2pay.log'),
+                  'formatter': 'verbose'
+              }
+          },
+          'loggers': {
+              'pay2pay': {
+                  'handlers': ['pay2pay'],
+                  'level': 'ERROR',
+                  'propagate': True
+              }
+          }
+      }
+
 4. Выполните ``python manage.py syncdb`` для создание таблицы с заказазами.
-
-
-=====
-Usage
-=====
