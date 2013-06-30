@@ -6,7 +6,7 @@ from django import forms
 from inspect import isfunction
 from .utils import get_signature
 from .utils import build_xml_string
-from .models import Order
+from .models import Payment
 
 
 class PayForm(forms.ModelForm):
@@ -56,4 +56,4 @@ class PayForm(forms.ModelForm):
 
     class Meta:
         exclude = ('created',)
-        model = Order
+        model = Payment

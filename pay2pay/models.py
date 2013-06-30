@@ -10,7 +10,7 @@ from .utils import build_xml_string
 from .utils import get_signature
 
 
-class Order(models.Model):
+class Payment(models.Model):
     STATUS_PROCESS = 'process'
     STATUS_RESERVE = 'reserve'
     STATUS_SUCCESS = 'success'

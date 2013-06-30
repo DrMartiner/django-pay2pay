@@ -9,8 +9,8 @@ from django.core.urlresolvers import reverse
 from django.test.utils import override_settings
 from .utils import build_xml_string
 from .utils import get_signature
-from .factories import OrderF
-from .models import Order
+from .factories import PaymentF
+from .models import Payment
 
 
 class UtilsTest(TestCase):
@@ -53,10 +53,10 @@ class OrderModelTest(TestCase):
             'merchant_id': 2669,
         }
 
-        order = Order()
-        data = order._get_xml_data()
+        payment = Payment()
+        data = payment._get_xml_data()
 
-        self.assertEquals(test_data, data, 'Data from Order model was wrong')
+        self.assertEquals(test_data, data, 'Data from Payment model was wrong')
 
 
 class ConfirmTest(WebTest):
@@ -64,8 +64,8 @@ class ConfirmTest(WebTest):
         self.xml = '<?xml version="1.0" encoding="UTF-8"?><response><version>1.3</version><type>result</type><merchant_id>2669</merchant_id><language></language><order_id>24e59062-7388-4f</order_id><amount>1.00</amount><currency>RUB</currency><description>Описание заказа</description><paymode>bank</paymode><trans_id>395156</trans_id><status>success</status><error_msg></error_msg><test_mode>1</test_mode><other><![CDATA[]]></other></response>'
         self.xml_encode = 'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48cmVzcG9uc2U PHZlcnNpb24 MS4zPC92ZXJzaW9uPjx0eXBlPnJlc3VsdDwvdHlwZT48bWVyY2hhbnRfaWQ MjY2OTwvbWVyY2hhbnRfaWQ PGxhbmd1YWdlPjwvbGFuZ3VhZ2U PG9yZGVyX2lkPjI0ZTU5MDYyLTczODgtNGY8L29yZGVyX2lkPjxhbW91bnQ MS4wMDwvYW1vdW50PjxjdXJyZW5jeT5SVUI8L2N1cnJlbmN5PjxkZXNjcmlwdGlvbj7QntC/0LjRgdCw0L3QuNC1INC30LDQutCw0LfQsDwvZGVzY3JpcHRpb24 PHBheW1vZGU YmFuazwvcGF5bW9kZT48dHJhbnNfaWQ Mzk1MTU2PC90cmFuc19pZD48c3RhdHVzPnN1Y2Nlc3M8L3N0YXR1cz48ZXJyb3JfbXNnPjwvZXJyb3JfbXNnPjx0ZXN0X21vZGU MTwvdGVzdF9tb2RlPjxvdGhlcj48IVtDREFUQVtdXT48L290aGVyPjwvcmVzcG9uc2U '
 
-        order = OrderF(order_id='24e59062-7388-4f')
-        order.save()
+        payment = PaymentF(order_id='24e59062-7388-4f')
+        payment.save()
 
     def _get_obj_response(self, xml):
         return {
@@ -98,8 +98,8 @@ class ConfirmTest(WebTest):
         url = reverse('pay2pay_confirm')
         self.app.post(url, params=params)
 
-        order = Order.objects.get(order_id='24e59062-7388-4f')
-        self.assertEquals(order.status, 'success', 'Order status was not updated')
+        payment = Payment.objects.get(order_id='24e59062-7388-4f')
+        self.assertEquals(payment.status, 'success', 'Payment status was not updated')
 
     @override_settings(PAY2PAY_HIDE_KEY='qCmm7SNTSdasfsqCmm7SNTSd')
     def test_confirm_response(self):

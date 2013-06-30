@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
 import factory
-from .models import Order
+from .models import Payment
 
 
-class OrderF(factory.Factory):
-    FACTORY_FOR = Order
+class PaymentF(factory.Factory):
+    FACTORY_FOR = Payment

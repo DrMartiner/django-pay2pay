@@ -8,20 +8,20 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding field 'Order.test_mode'
-        db.add_column(u'pay2pay_order', 'test_mode',
+        # Adding field 'Payment.test_mode'
+        db.add_column(u'pay2pay_payment', 'test_mode',
                       self.gf('django.db.models.fields.BooleanField')(default=True),
                       keep_default=False)
 
 
     def backwards(self, orm):
-        # Deleting field 'Order.test_mode'
-        db.delete_column(u'pay2pay_order', 'test_mode')
+        # Deleting field 'Payment.test_mode'
+        db.delete_column(u'pay2pay_payment', 'test_mode')
 
 
     models = {
         u'pay2pay.order': {
-            'Meta': {'ordering': "('created',)", 'object_name': 'Order'},
+            'Meta': {'ordering': "('created',)", 'object_name': 'Payment'},
             'amount': ('django.db.models.fields.FloatField', [], {'default': '0.0'}),
             'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'currency': ('django.db.models.fields.CharField', [], {'default': "'RUB'", 'max_length': '8'}),

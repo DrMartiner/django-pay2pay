@@ -11,7 +11,7 @@ from django.views.generic import View
 from annoying.functions import get_object_or_None
 from django.views.decorators.csrf import csrf_exempt
 from .utils import get_signature
-from .models import Order
+from .models import Payment
 
 logger = logging.getLogger('pay2pay')
 
@@ -34,20 +34,20 @@ class Confirm(View):
             response = {}
             logger.error('Can not parse xml', exc_info=True)
 
-        order = get_object_or_None(Order, order_id=response.get('order_id'))
-        if order:
+        payment = get_object_or_None(Payment, order_id=response.get('order_id'))
+        if payment:
             sig_encode = request.POST.get('sign', '')
             sign = get_signature(xml, conf.PAY2PAY_HIDE_KEY)
             if sig_encode == sign:
                 try:
-                    order.status = response['status']
-                    order.paymode = response['paymode']
-                    order.trans_id = response['trans_id']
-                    order.error_msg = response.get('error_msg', '')
+                    payment.status = response['status']
+                    payment.paymode = response['paymode']
+                    payment.trans_id = response['trans_id']
+                    payment.error_msg = response.get('error_msg', '')
                     if response.get('test_mode', '') == '1':
-                        order.test_mode = True
-                    order.save()
-                    order.send_signals()
+                        payment.test_mode = True
+                    payment.save()
+                    payment.send_signals()
                 except KeyError:
                     logger.error('Have not some key at parsed XML data', exc_info=True)
             else:

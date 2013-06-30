@@ -2,7 +2,7 @@
 
 from django.views.generic import TemplateView
 from pay2pay.forms import PayForm
-from pay2pay.models import Order
+from pay2pay.models import Payment
 
 
 class Paypage(TemplateView):

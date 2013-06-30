@@ -9,17 +9,17 @@ class Migration(SchemaMigration):
 
     def forwards(self, orm):
 
-        # Changing field 'Order.order_id'
-        db.alter_column(u'pay2pay_order', 'order_id', self.gf('django.db.models.fields.CharField')(max_length=16))
+        # Changing field 'Payment.order_id'
+        db.alter_column(u'pay2pay_payment', 'order_id', self.gf('django.db.models.fields.CharField')(max_length=16))
 
     def backwards(self, orm):
 
-        # Changing field 'Order.order_id'
-        db.alter_column(u'pay2pay_order', 'order_id', self.gf('django.db.models.fields.CharField')(max_length=32))
+        # Changing field 'Payment.order_id'
+        db.alter_column(u'pay2pay_payment', 'order_id', self.gf('django.db.models.fields.CharField')(max_length=32))
 
     models = {
         u'pay2pay.order': {
-            'Meta': {'ordering': "('created',)", 'object_name': 'Order'},
+            'Meta': {'ordering': "('created',)", 'object_name': 'Payment'},
             'amount': ('django.db.models.fields.FloatField', [], {'default': '0.0'}),
             'created': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'currency': ('django.db.models.fields.CharField', [], {'default': "'RUB'", 'max_length': '8'}),
