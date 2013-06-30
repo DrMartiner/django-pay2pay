@@ -1,6 +1,7 @@
 include LICENSE
 include README.rst
 recursive-include docs *
+recursive-include pay2pay *
 exclude *.pyc
 exclude settings_local.py
 exclude pay2pay.log
