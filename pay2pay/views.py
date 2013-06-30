@@ -25,6 +25,7 @@ class Confirm(View):
         error_msg = ''
 
         xml = request.POST.get('xml', '')
+        xml = xml.replace(' ', '+')
         xml = base64.b64decode(xml)
 
         try:
