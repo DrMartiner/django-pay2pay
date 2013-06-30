@@ -59,23 +59,28 @@ class Payment(models.Model):
         return build_xml_string(data)
 
     def _get_xml_data(self):
-        names = []
-        for field in self._meta.fields:
-            if field.name == 'created':
-                continue
-            names.append(field.name)
-
         data = {
             'success_url': conf.PAY2PAY_SUCCESS_URL,
             'fail_url': conf.PAY2PAY_FAIL_URL,
             'result_url': conf.PAY2PAY_RESULT_URL,
         }
-        for name in names:
+        if conf.PAY2PAY_TEST_MODE:
+            data['test_mode'] = 1
+        for name in self.names:
             value = getattr(self, name)
             if value:
                 data[name] = value
 
         return data
+
+    names = [
+        'version',
+        'merchant_id',
+        'order_id',
+        'amount',
+        'currency',
+        'description',
+    ]
 
     class Meta:
         ordering = ('created',)

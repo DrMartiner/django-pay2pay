@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import base64
 from mock import patch
 from django.conf import settings
 from django.test import TestCase

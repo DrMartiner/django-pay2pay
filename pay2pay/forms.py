@@ -16,18 +16,6 @@ class PayForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(PayForm, self).__init__(*args, **kwargs)
 
-        instance = kwargs.get('instance')
-        if not instance:
-            Exception('Need initialize instance to PayForm')
-
-        names = [
-            'version',
-            'merchant_id',
-            'order_id',
-            'amount',
-            'currency',
-            'description',
-        ]
         data = {
             'success_url': conf.PAY2PAY_SUCCESS_URL,
             'fail_url': conf.PAY2PAY_FAIL_URL,
@@ -36,7 +24,7 @@ class PayForm(forms.ModelForm):
         if conf.PAY2PAY_TEST_MODE:
             data['test_mode'] = 1
         initial = kwargs.get('initial', {})
-        for name in names:
+        for name in Payment.names:
             if name in initial:
                 data[name] = initial[name]
             else:
