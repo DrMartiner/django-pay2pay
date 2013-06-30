@@ -3,6 +3,9 @@
 import conf
 import uuid
 from django.db import models
+from .signals import payment_process
+from .signals import payment_completed
+from .signals import payment_fail
 from .utils import build_xml_string
 from .utils import get_signature
 
@@ -33,6 +36,18 @@ class Order(models.Model):
 
     updated = models.DateTimeField('Обновлен', auto_now=True)
     created = models.DateTimeField('Создан', auto_now_add=True)
+
+    def send_signals(self):
+        if not self.status:
+            return
+
+        status = self.status
+        if status == self.STATUS_PROCESS or status == self.STATUS_RESERVE:
+            payment_process.send(sender=self)
+        if status == self.STATUS_SUCCESS:
+            payment_completed.send(sender=self)
+        if status == self.STATUS_FAIL:
+            payment_fail.send(sender=self)
 
     @property
     def signature(self):

@@ -31,6 +31,7 @@ class Confirm(View):
         try:
             response = self._get_obj_response(xml)
         except (ValueError, TypeError):
+            response = {}
             logger.error('Can not parse xml', exc_info=True)
 
         order = get_object_or_None(Order, order_id=response.get('order_id'))
@@ -38,7 +39,6 @@ class Confirm(View):
             sig_encode = request.POST.get('sign', '')
             sign = get_signature(xml, conf.PAY2PAY_HIDE_KEY)
             if sig_encode == sign:
-                # TODO: make try\catch
                 try:
                     order.status = response['status']
                     order.paymode = response['paymode']
@@ -47,6 +47,7 @@ class Confirm(View):
                     if response.get('test_mode', '') == '1':
                         order.test_mode = True
                     order.save()
+                    order.send_signals()
                 except KeyError:
                     logger.error('Have not some key at parsed XML data', exc_info=True)
             else:
