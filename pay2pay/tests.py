@@ -61,27 +61,10 @@ class OrderModelTest(TestCase):
 
 class ConfirmTest(WebTest):
     def setUp(self):
-        self.xml = """<?xml version="1.0" encoding="UTF-8"?>
-            <response>
-                <version>1.3</version>
-                <merchant_id>10</merchant_id>
-                <type>result</type>
-                <language>ru</language>
-                <order_id>O_123</order_id>
-                <amount>10.50</amount>
-                <currency>RUB</currency>
-                <description>Описание</description>
-                <paymode>Paymode_Code</paymode>
-                <trans_id>12345</trans_id>
-                <status>success</status>
-                <error_msg></error_msg>
-                <test_mode>1</test_mode>
-                <other>data</other>
-                <paydata>...</paydata>
-            </response>
-        """
+        self.xml = '<?xml version="1.0" encoding="UTF-8"?><response><version>1.3</version><type>result</type><merchant_id>2669</merchant_id><language></language><order_id>24e59062-7388-4f</order_id><amount>1.00</amount><currency>RUB</currency><description>Описание заказа</description><paymode>bank</paymode><trans_id>395156</trans_id><status>success</status><error_msg></error_msg><test_mode>1</test_mode><other><![CDATA[]]></other></response>'
+        self.xml_encode = 'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48cmVzcG9uc2U PHZlcnNpb24 MS4zPC92ZXJzaW9uPjx0eXBlPnJlc3VsdDwvdHlwZT48bWVyY2hhbnRfaWQ MjY2OTwvbWVyY2hhbnRfaWQ PGxhbmd1YWdlPjwvbGFuZ3VhZ2U PG9yZGVyX2lkPjI0ZTU5MDYyLTczODgtNGY8L29yZGVyX2lkPjxhbW91bnQ MS4wMDwvYW1vdW50PjxjdXJyZW5jeT5SVUI8L2N1cnJlbmN5PjxkZXNjcmlwdGlvbj7QntC/0LjRgdCw0L3QuNC1INC30LDQutCw0LfQsDwvZGVzY3JpcHRpb24 PHBheW1vZGU YmFuazwvcGF5bW9kZT48dHJhbnNfaWQ Mzk1MTU2PC90cmFuc19pZD48c3RhdHVzPnN1Y2Nlc3M8L3N0YXR1cz48ZXJyb3JfbXNnPjwvZXJyb3JfbXNnPjx0ZXN0X21vZGU MTwvdGVzdF9tb2RlPjxvdGhlcj48IVtDREFUQVtdXT48L290aGVyPjwvcmVzcG9uc2U '
 
-        order = OrderF(order_id='O_123')
+        order = OrderF(order_id='24e59062-7388-4f')
         order.save()
 
     def _get_obj_response(self, xml):
@@ -89,43 +72,41 @@ class ConfirmTest(WebTest):
             'status': 'success',
             'test_mode': '1',
             'description': u'Описание',
-            'order_id': 'O_123',
+            'order_id': '24e59062-7388-4f',
             'error_msg': '',
             'paymode': 'Paymode_Code',
             'currency': 'RUB',
-            'amount': 10.50,
+            'amount': 1.0,
             'version': '1.3',
             'merchant_id': 2669,
-            'trans_id': '12345'
+            'trans_id': '394556',
         }
 
     def _get_signature(self, key):
-        return 'YzU3N2Y4MTNlNzUyNTRkODhiZWFiOWIwNjFlOWNiOTQ='
+        return 'NDU2ZmUzYTExNzA3ZjA5NDQ3NmQxM2E0YTY5YzEwZWM='
 
     @override_settings(PAY2PAY_HIDE_KEY='qCmm7SNTSdasfsqCmm7SNTSd')
     @patch('pay2pay.views.Confirm._get_obj_response', _get_obj_response)
     @patch('pay2pay.utils.get_signature', _get_signature)
     def test_update_status(self):
-        xml_encode = base64.b64encode(self.xml)
         sign_encode = get_signature(self.xml, settings.PAY2PAY_HIDE_KEY)
 
         params = {
-            'xml': xml_encode,
+            'xml': self.xml_encode,
             'sign': sign_encode,
         }
         url = reverse('pay2pay_confirm')
         self.app.post(url, params=params)
 
-        order = Order.objects.get(order_id='O_123')
+        order = Order.objects.get(order_id='24e59062-7388-4f')
         self.assertEquals(order.status, 'success', 'Order status was not updated')
 
     @override_settings(PAY2PAY_HIDE_KEY='qCmm7SNTSdasfsqCmm7SNTSd')
     def test_confirm_response(self):
-        xml_encode = base64.b64encode(self.xml)
         sign_encode = get_signature(self.xml, settings.PAY2PAY_HIDE_KEY)
 
         params = {
-            'xml': xml_encode,
+            'xml': self.xml_encode,
             'sign': sign_encode,
         }
         url = reverse('pay2pay_confirm')
