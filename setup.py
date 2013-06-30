@@ -21,7 +21,7 @@ tests_require = [
 
 setup(
     name='django-pay2pay',
-    version='0.9',
+    version='0.9.1',
     packages=['pay2pay'],
     include_package_data=True,
     license='MIT',
