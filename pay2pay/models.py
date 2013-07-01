@@ -11,11 +11,13 @@ from .utils import get_signature
 
 
 class Payment(models.Model):
+    STATUS_NOT_SEND = 'not_send'
     STATUS_PROCESS = 'process'
     STATUS_RESERVE = 'reserve'
     STATUS_SUCCESS = 'success'
     STATUS_FAIL = 'fail'
     STATUS_CHOICES = (
+        (STATUS_NOT_SEND, 'Не отправлен'),
         (STATUS_PROCESS, 'Ожидается оплата'),
         (STATUS_RESERVE, 'Средства зарезервированы'),
         (STATUS_SUCCESS, 'заказ оплачен'),
@@ -30,7 +32,7 @@ class Payment(models.Model):
 
     paymode = models.CharField('Способ платежа', max_length=16, blank=True, null=True)
     trans_id = models.CharField('Номер транзакции', max_length=32, blank=True, null=True)
-    status = models.CharField('Статус', max_length=16, choices=STATUS_CHOICES, blank=True, null=True)
+    status = models.CharField('Статус', max_length=16, choices=STATUS_CHOICES, default=STATUS_NOT_SEND)
     error_msg = models.CharField('Описание ошибки', max_length=256, blank=True, null=True)
     test_mode = models.BooleanField('Тестовый режим', default=conf.PAY2PAY_TEST_MODE)
 
