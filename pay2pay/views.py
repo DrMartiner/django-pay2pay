@@ -52,7 +52,7 @@ class Confirm(View):
             error_msg = 'Unknown order_id'
 
         if error_msg:
-            logger.error(error_msg, exc_info=True)
+            logger.error(error_msg)
 
         xml_response = self._get_xml_response(error_msg)
         return HttpResponse(xml_response)
