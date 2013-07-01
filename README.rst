@@ -54,3 +54,10 @@ Quick start
       }
 
 4. Выполните ``python manage.py syncdb`` для создание таблицы с заказазами или выполните мограцию, если вы используете south: ``python manage.py migrate pay2pay2``
+
+
+5. Определите три шаблона::
+
+      pay2pay/payment_fail.html # Для отменных платежей
+      pay2pay/payment_success.html # Для успешных платежей
+
