@@ -58,13 +58,21 @@ class OrderModelTest(TestCase):
         self.assertEquals(test_data, data, 'Data from Payment model was wrong')
 
 
-class ConfirmTest(WebTest):
+class PaymentTestBase(WebTest):
+    named_url = ''
+    order_id='24e59062-7388-4f'
+
     def setUp(self):
         self.xml = '<?xml version="1.0" encoding="UTF-8"?><response><version>1.3</version><type>result</type><merchant_id>2669</merchant_id><language></language><order_id>24e59062-7388-4f</order_id><amount>1.00</amount><currency>RUB</currency><description>Описание заказа</description><paymode>bank</paymode><trans_id>395156</trans_id><status>success</status><error_msg></error_msg><test_mode>1</test_mode><other><![CDATA[]]></other></response>'
         self.xml_encode = 'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48cmVzcG9uc2U PHZlcnNpb24 MS4zPC92ZXJzaW9uPjx0eXBlPnJlc3VsdDwvdHlwZT48bWVyY2hhbnRfaWQ MjY2OTwvbWVyY2hhbnRfaWQ PGxhbmd1YWdlPjwvbGFuZ3VhZ2U PG9yZGVyX2lkPjI0ZTU5MDYyLTczODgtNGY8L29yZGVyX2lkPjxhbW91bnQ MS4wMDwvYW1vdW50PjxjdXJyZW5jeT5SVUI8L2N1cnJlbmN5PjxkZXNjcmlwdGlvbj7QntC/0LjRgdCw0L3QuNC1INC30LDQutCw0LfQsDwvZGVzY3JpcHRpb24 PHBheW1vZGU YmFuazwvcGF5bW9kZT48dHJhbnNfaWQ Mzk1MTU2PC90cmFuc19pZD48c3RhdHVzPnN1Y2Nlc3M8L3N0YXR1cz48ZXJyb3JfbXNnPjwvZXJyb3JfbXNnPjx0ZXN0X21vZGU MTwvdGVzdF9tb2RlPjxvdGhlcj48IVtDREFUQVtdXT48L290aGVyPjwvcmVzcG9uc2U '
 
-        payment = PaymentF(order_id='24e59062-7388-4f')
+        payment = PaymentF(order_id=self.order_id)
         payment.save()
+
+        self.url = reverse(self.named_url)
+
+    def tearDown(self):
+        Payment.objects.get(order_id=self.order_id)
 
     def _get_obj_response(self, xml):
         return {
@@ -94,23 +102,33 @@ class ConfirmTest(WebTest):
             'xml': self.xml_encode,
             'sign': sign_encode,
         }
-        url = reverse('pay2pay_confirm')
-        self.app.post(url, params=params)
+        self.app.post(self.url, params=params)
 
-        payment = Payment.objects.get(order_id='24e59062-7388-4f')
+        payment = Payment.objects.get(order_id=self.order_id)
         self.assertEquals(payment.status, 'success', 'Payment status was not updated')
 
+
+class ConfirmTest(PaymentTestBase):
+    named_url = 'pay2pay_confirm'
+
     @override_settings(PAY2PAY_HIDE_KEY='qCmm7SNTSdasfsqCmm7SNTSd')
-    def test_confirm_response(self):
+    def test_response(self):
         sign_encode = get_signature(self.xml, settings.PAY2PAY_HIDE_KEY)
 
         params = {
             'xml': self.xml_encode,
             'sign': sign_encode,
         }
-        url = reverse('pay2pay_confirm')
-        response = self.app.post(url, params=params)
+        response = self.app.post(self.url, params=params)
 
         self.assertEquals(200, response.status_code, 'Confirm view is unavalible')
         self.assertIn('<status>yes</status>', response.text, 'Response has not status yes')
         self.assertIn('<error_msg></error_msg>', response.text, 'Response have error message')
+
+
+class SuccessTest(PaymentTestBase):
+    named_url = 'pay2pay_success'
+
+
+class FailTest(PaymentTestBase):
+    named_url = 'pay2pay_fail'

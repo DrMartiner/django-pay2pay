@@ -6,7 +6,7 @@ import xmltodict
 import lxml.etree
 import lxml.builder
 from django.http import HttpResponse
-from django.views.generic import View
+from django.views.generic import View, TemplateView
 from annoying.functions import get_object_or_None
 from django.views.decorators.csrf import csrf_exempt
 from .utils import get_signature
@@ -77,3 +77,19 @@ class Confirm(View):
     def _get_obj_response(self, xml):
         xml = xml.replace('<?xmlversion="1.0"encoding="UTF-8"?>', '').replace('\n', '')
         return xmltodict.parse(xml)['response']
+
+
+class PaymentSuccess(TemplateView, Confirm):
+    template_name = 'pay2pay/payment_success.html'
+
+    def post(self, request, *args, **kwargs):
+        super(PaymentSuccess, self).post(request, *args, **kwargs)
+        return super(PaymentSuccess, self).get(request, *args, **kwargs)
+
+
+class PaymentFail(TemplateView, Confirm):
+    template_name = 'pay2pay/payment_fail.html'
+
+    def post(self, request, *args, **kwargs):
+        super(PaymentFail, self).post(request, *args, **kwargs)
+        return super(PaymentFail, self).get(request, *args, **kwargs)
