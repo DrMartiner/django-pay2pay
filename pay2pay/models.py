@@ -23,7 +23,7 @@ class Payment(models.Model):
     )
     version = models.CharField('Версия интерфейса', max_length=8, default='1.3')
     merchant_id = models.PositiveIntegerField('ID магазина', default=conf.PAY2PAY_MERCHANT_ID)
-    order_id = models.CharField('Номер заказа', max_length=16, default=lambda: str(uuid.uuid4())[:16])
+    order_id = models.CharField('Номер заказа', max_length=16, default=lambda: str(uuid.uuid4()).replace('-', '')[:16])
     amount = models.FloatField('Сумма', default=.0)
     currency = models.CharField('Валюта', max_length=8, default=conf.PAY2PAY_CURRENCY)
     description = models.CharField('Описание', max_length=512, default='')
@@ -36,6 +36,12 @@ class Payment(models.Model):
 
     updated = models.DateTimeField('Обновлен', auto_now=True)
     created = models.DateTimeField('Создан', auto_now_add=True)
+
+    def __unicode__(self):
+        return '%s <%s>' % (
+            self.order_id,
+            self.get_status_display()
+        )
 
     def send_signals(self):
         if not self.status:
