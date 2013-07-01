@@ -22,8 +22,8 @@ Quick start
       PAY2PAY_MERCHANT_ID = 1111
       PAY2PAY_HIDE_KEY = 'qCmm7SNTSdasfsqCmm7SNTSd'
       PAY2PAY_SECRET_KEY = 'qCmm7dsaSdasfsqCmgdjfgkdfghdfsad'
-      PAY2PAY_FAIL_URL = 'http://example.com/fail/'
-      PAY2PAY_SUCCESS_URL = 'http://example.com/success/'
+      PAY2PAY_FAIL_URL = 'http://example.com/pay2pay/fail/'
+      PAY2PAY_SUCCESS_URL = 'http://example.com/pay2pay/success/'
       PAY2PAY_RESULT_URL = 'http://example.com/pay2pay/confirm/'
 
 4. Добавить логер с именем ``pay2pay``::
@@ -53,4 +53,4 @@ Quick start
           }
       }
 
-4. Выполните ``python manage.py syncdb`` для создание таблицы с заказазами.
+4. Выполните ``python manage.py syncdb`` для создание таблицы с заказазами или выполните мограцию, если вы используете south: ``python manage.py migrate pay2pay2``
