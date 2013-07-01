@@ -11,7 +11,7 @@ from .utils import get_signature
 
 
 class Payment(models.Model):
-    STATUS_UNCONFIRM = 'not_send'
+    STATUS_UNCONFIRM = 'unconfirm'
     STATUS_PROCESS = 'process'
     STATUS_RESERVE = 'reserve'
     STATUS_SUCCESS = 'success'
