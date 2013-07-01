@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import conf
-import base64
 import logging
 import xmltodict
 import lxml.etree
@@ -24,10 +23,7 @@ class Confirm(View):
     def post(self, request, *args, **kwargs):
         error_msg = ''
 
-        xml = request.POST.get('xml', '')
-        xml = xml.replace(' ', '+')
-        xml = base64.b64decode(xml)
-
+        xml = request.POST.get('xml', '').replace(' ', '+').decode('base64')
         try:
             response = self._get_obj_response(xml)
         except (ValueError, TypeError):
