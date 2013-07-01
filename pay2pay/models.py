@@ -92,5 +92,5 @@ class Payment(models.Model):
 
     class Meta:
         ordering = ('created',)
-        verbose_name = 'Заказ'
-        verbose_name_plural = 'Заказы'
+        verbose_name = 'Платеж'
+        verbose_name_plural = 'Платежи'
