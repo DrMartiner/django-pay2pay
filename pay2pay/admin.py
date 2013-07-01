@@ -9,12 +9,4 @@ class PaymentAdmin(admin.ModelAdmin):
     list_filter = ('merchant_id', 'paymode', 'status', 'created')
     search_fields = ('order_id', 'description', 'error_msg')
 
-    can_delete = False
-
-    def has_add_permission(self, request):
-        return False
-
-    def has_change_permission(self, request, obj=None):
-        return False
-
 admin.site.register(Payment, PaymentAdmin)
