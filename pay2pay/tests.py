@@ -66,7 +66,7 @@ class PaymentTestBase(WebTest):
         self.xml = '<?xml version="1.0" encoding="UTF-8"?><response><version>1.3</version><type>result</type><merchant_id>2669</merchant_id><language></language><order_id>24e59062-7388-4f</order_id><amount>1.00</amount><currency>RUB</currency><description>Описание заказа</description><paymode>bank</paymode><trans_id>395156</trans_id><status>success</status><error_msg></error_msg><test_mode>1</test_mode><other><![CDATA[]]></other></response>'
         self.xml_encode = 'PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48cmVzcG9uc2U PHZlcnNpb24 MS4zPC92ZXJzaW9uPjx0eXBlPnJlc3VsdDwvdHlwZT48bWVyY2hhbnRfaWQ MjY2OTwvbWVyY2hhbnRfaWQ PGxhbmd1YWdlPjwvbGFuZ3VhZ2U PG9yZGVyX2lkPjI0ZTU5MDYyLTczODgtNGY8L29yZGVyX2lkPjxhbW91bnQ MS4wMDwvYW1vdW50PjxjdXJyZW5jeT5SVUI8L2N1cnJlbmN5PjxkZXNjcmlwdGlvbj7QntC/0LjRgdCw0L3QuNC1INC30LDQutCw0LfQsDwvZGVzY3JpcHRpb24 PHBheW1vZGU YmFuazwvcGF5bW9kZT48dHJhbnNfaWQ Mzk1MTU2PC90cmFuc19pZD48c3RhdHVzPnN1Y2Nlc3M8L3N0YXR1cz48ZXJyb3JfbXNnPjwvZXJyb3JfbXNnPjx0ZXN0X21vZGU MTwvdGVzdF9tb2RlPjxvdGhlcj48IVtDREFUQVtdXT48L290aGVyPjwvcmVzcG9uc2U '
 
-        payment = PaymentF(order_id=self.order_id)
+        payment = PaymentF(order_id=self.order_id, amount=1.0)
         payment.save()
 
         self.url = reverse(self.named_url)

@@ -35,6 +35,14 @@ class Confirm(View):
             sig_encode = request.POST.get('sign', '')
             sign = get_signature(xml, conf.PAY2PAY_HIDE_KEY)
             if sig_encode == sign:
+                # Check the amount
+                amount = response.get('amount', 0)
+                if payment.amount != float(amount):
+                    error_msg = 'Amount does not match'
+                    logger.error(error_msg)
+                    xml_response = self._get_xml_response(error_msg)
+                    return HttpResponse(xml_response)
+
                 try:
                     payment.status = response['status']
                     payment.paymode = response['paymode']
