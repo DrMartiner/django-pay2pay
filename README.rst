@@ -8,6 +8,10 @@ Dajngo pay2pay
 Quick start
 =====
 
+0. Устанавливаем приложение::
+
+      pip install django-pay2pay
+
 1. Добавляем 'pay2pay' INSTALLED_APPS::
 
       INSTALLED_APPS = (
@@ -17,7 +21,7 @@ Quick start
 
 2. Добавить ``url(r'^pay2pay/', include('pay2pay.urls')),`` в urls.py
 
-3. Обязательные параметры settings.py::
+3. Обязательные параметры settings.py (находятся в https://cp.pay2pay.com/ ) ::
 
       PAY2PAY_MERCHANT_ID = 1111
       PAY2PAY_HIDE_KEY = 'qCmm7SNTSdasfsqCmm7SNTSd'
@@ -29,11 +33,11 @@ Quick start
 4. Добавить логер с именем ``pay2pay``::
 
       LOGGING = {
-          'version': 1,
-          'disable_existing_loggers': False,
-          'formatters': {
-        'verbose': {
-            'format': '%(levelname)s %(asctime)s %(module)s %(funcName)s %(message)s'
+        'version': 1,
+        'disable_existing_loggers': False,
+        'formatters': {
+        'standart': {
+            'format': '(%(asctime)s) %(levelname)s [%(filename)s -> %(funcName)s -> %(lineno)d]: "%(message)s"',
         }
           },
           'handlers': {
@@ -41,13 +45,13 @@ Quick start
                   'level': 'DEBUG',
                   'class': 'logging.handlers.WatchedFileHandler',
                   'filename': os.path.join(ROOT, 'pay2pay.log'),
-                  'formatter': 'verbose'
+                  'formatter': 'standart'
               }
           },
           'loggers': {
               'pay2pay': {
                   'handlers': ['pay2pay'],
-                  'level': 'ERROR',
+                  'level': 'DEBUG',
                   'propagate': True
               }
           }
@@ -56,7 +60,7 @@ Quick start
 4. Выполните ``python manage.py syncdb`` для создание таблицы с заказазами или выполните мограцию, если вы используете south: ``python manage.py migrate pay2pay2``
 
 
-5. Определите три шаблона::
+5. Определите два шаблона::
 
       pay2pay/payment_fail.html # Для отменных платежей
       pay2pay/payment_success.html # Для успешных платежей
