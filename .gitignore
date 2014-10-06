@@ -23,4 +23,4 @@ pay2pay.log
 
 build/*
 dist/*
-django_pay2pay.egg-info/*w
+django_pay2pay.egg-info/*
