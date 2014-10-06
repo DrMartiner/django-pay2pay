@@ -1,4 +1,4 @@
-Django>=1.3
+Django<1.7
 nose
 mock==1.0.1
 coveralls
@@ -8,3 +8,5 @@ django-webtest
 south
 xmltodict
 django-annoying
+lxml
+BeautifulSoup

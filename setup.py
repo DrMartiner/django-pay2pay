@@ -17,11 +17,13 @@ tests_require = [
     'south',
     'xmltodict',
     'django-annoying',
+    'lxml',
+    'BeautifulSoup',
 ]
 
 setup(
     name='django-pay2pay',
-    version='0.9.4',
+    version='0.9.5',
     packages=['pay2pay'],
     include_package_data=True,
     license='MIT',
@@ -47,5 +49,7 @@ setup(
         'south',
         'xmltodict',
         'django-annoying',
+        'lxml',
+        'BeautifulSoup',
     ],
 )
