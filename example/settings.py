@@ -74,7 +74,7 @@ LOGGING = {
         'pay2pay': {
             'level': 'DEBUG',
             'class': 'logging.handlers.WatchedFileHandler',
-            'filename': os.path.join(ROOT, 'pay2pay.log'),
+            'filename': os.path.join(ROOT, '../pay2pay.log'),
             'formatter': 'verbose'
         }
     },

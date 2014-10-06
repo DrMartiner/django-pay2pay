@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.conf.urls import patterns, include, url
-from views import Paypage
+from example.views import Paypage
 
 urlpatterns = patterns('',
     url(r'^pay2pay/', include('pay2pay.urls')),
