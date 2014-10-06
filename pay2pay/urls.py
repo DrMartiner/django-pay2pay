@@ -7,6 +7,6 @@ from .views import PaymentSuccess
 
 urlpatterns = patterns('',
     url(r'^confirm/$', Confirm.as_view(), name='pay2pay_confirm'),
-    url(r'^success/$', PaymentFail.as_view(), name='pay2pay_success'),
-    url(r'^fail/$', PaymentSuccess.as_view(), name='pay2pay_fail'),
+    url(r'^success/$', PaymentSuccess.as_view(), name='pay2pay_success'),
+    url(r'^fail/$', PaymentFail.as_view(), name='pay2pay_fail'),
 )
